@@ -18,5 +18,16 @@ class SomeCrap(commands.Cog):
         emojis = ctx.bot.emojis
 
         await ctx.send(choice(emojis))
-        '''for i in animated_emoji:
-            await ctx.send(i)'''
+      
+    @commands.command(name='gay')
+    async def gay(self, ctx, *, who:str = None):
+        """gay"""
+        if who:
+            await ctx.send(skittify(f'{who} is gay!'))
+        else:
+            await ctx.send(skittify('You are gay'))
+      
+
+    
+
+    
