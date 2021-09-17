@@ -281,7 +281,7 @@ class Music(commands.Cog):
         ctx.voice_state = self.get_voice_state(ctx)
 
     async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
-        await ctx.send('An error occurred: {}'.format(str(error)))
+        await ctx.send(skittify('An error occurred: {}'.format(str(error))))
 
     @commands.command(name='join')
     # @commands.has_permissions(manage_guild=True)
@@ -304,7 +304,7 @@ class Music(commands.Cog):
         """Clears the queue and leaves the voice channel."""
 
         if not ctx.voice_state.voice:
-            return await ctx.send('Not connected to any voice channel.')
+            return await ctx.send(skittify('Not connected to any voice channel.'))
 
         await ctx.voice_state.stop()
         del self.voice_states[ctx.guild.id]
@@ -400,7 +400,7 @@ class Music(commands.Cog):
             print(list(ctx.voice_state.songs[:]))
 
         else:
-            ctx.voice_state.songs.remove(0) if len(
+            ctx.voice_state.songs.remove(-1) if len(
                 ctx.voice_state.songs) > 0 else None
             await ctx.send(skittify('Loop mode is now `False!`'))
         await ctx.message.add_reaction('✅')
@@ -413,7 +413,7 @@ class Music(commands.Cog):
                 source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop)
 
             except YTDLError as e:
-                await ctx.send('An error occurred while processing this request: {}'.format(str(e)))
+                await ctx.send(skittify('An error occurred while processing this request: {}'.format(str(e))))
             else:
                 if not ctx.voice_state.voice:
                     await ctx.invoke(self._join)
@@ -421,7 +421,7 @@ class Music(commands.Cog):
                 song = Song(source)
                 await ctx.voice_state.songs.put(song)
 
-                await ctx.send('Enqueued {}'.format(str(source)))
+                await ctx.send(skittify('Enqueued {}'.format(str(source))))
                 await ctx.send(embed=song.create_embed())
 
     @_play.before_invoke
