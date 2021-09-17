@@ -19,5 +19,3 @@ SKITTLE_DICT = ["uwu", "blushes", "𝘣𝘭𝘶𝘴𝘩𝘦𝘴", "(im a girl bt
 def skittify(msg: str, skittiness: int = random.randrange(3, 11)) -> str:
     first_char = msg[0].lower()
     return first_char + f"\n{first_char}-" * skittiness + f"\n*{first_char}~{first_char}{msg[1:]}*" + f"\n*{random.choice(SKITTLE_DICT)}*"
-
-
