@@ -17,12 +17,12 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 youtube_dl.utils.bug_reports_message = lambda: ''
 
 
-SKITTLE_DICT = ["uwu", "blushes"]
+SKITTLE_DICT = ["uwu", "blushes", "𝘣𝘭𝘶𝘴𝘩𝘦𝘴", "(im a girl btw)"]
 
 
 def skittify(msg: str, skittiness: int = random.randrange(3, 11)) -> str:
     first_char = msg[0].lower()
-    return first_char + f"\n{first_char}-" * skittiness + f"\n{first_char}" + msg[1:] + f"\n*{random.choice(SKITTLE_DICT)}*"
+    return first_char + "-" + f"\n{first_char}-" * skittiness + f"\n{first_char}" + msg[1:] + f"\n*{random.choice(SKITTLE_DICT)}*"
 
 
 class VoiceError(Exception):
@@ -170,12 +170,7 @@ class Song:
 
 
 class SongQueue(asyncio.Queue):
-    def __init__(self):
-        super().__init__()
-        self.now = None
-
     def __getitem__(self, item):
-
         if isinstance(item, slice):
             return list(itertools.islice(self._queue, item.start, item.stop, item.step))
         else:
@@ -251,7 +246,7 @@ class VoiceState:
             self.voice.play(self.current.source, after=self.play_next_song)
             await self.current.source.channel.send(embed=self.current.create_embed())
             if self.loop:
-                source = await YTDLSource.create_source(self._ctx, self.songs.now, loop=self.bot.loop)
+                source = await YTDLSource.create_source(self._ctx, str(self.current.source), loop=self.bot.loop)
                 song = Song(source)
                 await self.songs.put(song)
 
@@ -399,7 +394,7 @@ class Bot(commands.Cog):
         ctx.voice_state.loop = not ctx.voice_state.loop
         if ctx.voice_state.loop:
             await ctx.send(skittify('Loop mode is now `True!`'))
-            source = await YTDLSource.create_source(ctx, ctx.voice_state.songs.now, loop=self.bot.loop)
+            source = await YTDLSource.create_source(ctx, str(ctx.voice_state.current.source), loop=self.bot.loop)
             song = Song(source)
             await ctx.voice_state.songs.put(song)
 
@@ -421,7 +416,6 @@ class Bot(commands.Cog):
                     await ctx.invoke(self._join)
 
                 song = Song(source)
-                ctx.voice_state.songs.now = str(source)
                 await ctx.voice_state.songs.put(song)
 
                 await ctx.send(skittify('Enqueued {}'.format(str(source))))
