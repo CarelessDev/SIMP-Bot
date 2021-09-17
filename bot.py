@@ -7,12 +7,8 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 
-
-
-
-
 def setup(bot):
-    bot.add_cog(SomeCrap(Bot))
+    bot.add_cog(SomeCrap(bot))
     bot.add_cog(Music(bot))
 
 
