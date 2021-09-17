@@ -112,20 +112,8 @@ class YTDLSource(discord.PCMVolumeTransformer):
     def parse_duration(duration: int):
         if duration > 0:
             minutes, seconds = divmod(duration, 60)
-            hours, minutes = divmod(minutes, 60)
-            days, hours = divmod(hours, 24)
-
-            duration = []
-            if days > 0:
-                duration.append('{}'.format(days))
-            if hours > 0:
-                duration.append('{}'.format(hours))
-            if minutes > 0:
-                duration.append('{}'.format(minutes))
-            if seconds > 0:
-                duration.append('{}'.format(seconds))
-
-            value = ':'.join(duration)
+            value = "{}:{}{}".format(
+                minutes, '0' if seconds < 10 else '', seconds)
 
         elif duration == 0:
             value = "LIVE"
