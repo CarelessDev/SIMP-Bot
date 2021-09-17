@@ -17,9 +17,12 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 youtube_dl.utils.bug_reports_message = lambda: ''
 
 
-def skittify(msg: str, skittiness: int = 3) -> str:
-    first_char = msg[0]
-    return first_char[0] + f"\n{first_char[0].lower()}~" * skittiness + msg[1:]
+SKITTLE_DICT = ["uwu", "blushes"]
+
+
+def skittify(msg: str, skittiness: int = random.randrange(3, 11)) -> str:
+    first_char = msg[0].lower()
+    return first_char + f"\n{first_char}-" * skittiness + f"\n{first_char}" + msg[1:] + f"\n*{random.choice(SKITTLE_DICT)}*"
 
 
 class VoiceError(Exception):
