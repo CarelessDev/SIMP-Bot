@@ -19,7 +19,7 @@ youtube_dl.utils.bug_reports_message = lambda: ''
 
 def skittify(msg: str, skittiness: int = 3) -> str:
     first_char = msg[0]
-    return first_char[0] + f"\n{first_char[0].lower()}" * skittiness + msg[1:]
+    return first_char[0] + f"\n{first_char[0].lower()}~" * skittiness + msg[1:]
 
 
 class VoiceError(Exception):
