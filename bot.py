@@ -17,6 +17,11 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 youtube_dl.utils.bug_reports_message = lambda: ''
 
 
+def skittify(msg: str, skittiness: int = 3) -> str:
+    first_char = msg[0]
+    return first_char[0] + f"\n{first_char[0].lower()}" * skittiness + msg[1:]
+
+
 class VoiceError(Exception):
     pass
 
@@ -297,7 +302,7 @@ class Bot(commands.Cog):
         ctx.voice_state = self.get_voice_state(ctx)
 
     async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
-        await ctx.send('An error occurred: {}'.format(str(error)))
+        await ctx.send(skittify('An error occurred: {}'.format(str(error))))
 
     @commands.command(name='join')
     async def _join(self, ctx: commands.Context, *, channel: discord.VoiceChannel = None):
@@ -317,7 +322,7 @@ class Bot(commands.Cog):
         """Clears the queue and leaves the voice channel."""
 
         if not ctx.voice_state.voice:
-            return await ctx.send('Not connected to any voice channel.')
+            return await ctx.send(skittify('Not connected to any voice channel.'))
 
         await ctx.voice_state.stop()
         del self.voice_states[ctx.guild.id]
@@ -351,30 +356,15 @@ class Bot(commands.Cog):
     @commands.command(name='skip', aliases=['s'])
     async def _skip(self, ctx: commands.Context):
         if not ctx.voice_state.is_playing:
-            return await ctx.send('Not playing any music right now...')
+            return await ctx.send(skittify('Not playing any music right now...'))
 
-        voter = ctx.message.author
-        if voter == ctx.voice_state.current.requester:
-            await ctx.message.add_reaction('⏭')
-            ctx.voice_state.skip()
-
-        elif voter.id not in ctx.voice_state.skip_votes:
-            ctx.voice_state.skip_votes.add(voter.id)
-            total_votes = len(ctx.voice_state.skip_votes)
-
-            if total_votes >= 3:
-                await ctx.message.add_reaction('⏭')
-                ctx.voice_state.skip()
-            else:
-                await ctx.send('Skip vote added, currently at **{}/3**'.format(total_votes))
-
-        else:
-            await ctx.send('You have already voted to skip this song.')
+        await ctx.message.add_reaction('⏭')
+        ctx.voice_state.skip()
 
     @commands.command(name='queue')
     async def _queue(self, ctx: commands.Context, *, page: int = 1):
         if len(ctx.voice_state.songs) == 0:
-            return await ctx.send('Empty queue.')
+            return await ctx.send(skittify('Empty queue.'))
 
         items_per_page = 10
         pages = math.ceil(len(ctx.voice_state.songs) / items_per_page)
@@ -394,7 +384,7 @@ class Bot(commands.Cog):
     @commands.command(name='remove')
     async def _remove(self, ctx: commands.Context, index: int):
         if len(ctx.voice_state.songs) == 0:
-            return await ctx.send('Empty queue.')
+            return await ctx.send(skittify('Empty queue.'))
 
         ctx.voice_state.songs.remove(index - 1)
         await ctx.message.add_reaction('✅')
@@ -402,16 +392,17 @@ class Bot(commands.Cog):
     @commands.command(name='loop')
     async def _loop(self, ctx: commands.Context):
         if not ctx.voice_state.is_playing:
-            return await ctx.send('Nothing being played at the moment.')
+            return await ctx.send(skittify('Nothing being played at the moment.'))
         ctx.voice_state.loop = not ctx.voice_state.loop
         if ctx.voice_state.loop:
-            await ctx.send('Loop mode is now `True!`')
+            await ctx.send(skittify('Loop mode is now `True!`'))
             source = await YTDLSource.create_source(ctx, ctx.voice_state.songs.now, loop=self.bot.loop)
             song = Song(source)
             await ctx.voice_state.songs.put(song)
 
         else:
-            await ctx.send('Loop mode is now `False!`')
+            ctx.voice_state.songs.remove(0)
+            await ctx.send(skittify('Loop mode is now `False!`'))
         await ctx.message.add_reaction('✅')
 
     @commands.command(name='play', aliases=['p'])
@@ -421,7 +412,7 @@ class Bot(commands.Cog):
                 source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop)
 
             except YTDLError as e:
-                await ctx.send('An error occurred while processing this request: {}'.format(str(e)))
+                await ctx.send(skittify('An error occurred while processing this request: {}'.format(str(e))))
             else:
                 if not ctx.voice_state.voice:
                     await ctx.invoke(self._join)
@@ -430,7 +421,7 @@ class Bot(commands.Cog):
                 ctx.voice_state.songs.now = str(source)
                 await ctx.voice_state.songs.put(song)
 
-                await ctx.send('Enqueued {}'.format(str(source)))
+                await ctx.send(skittify('Enqueued {}'.format(str(source))))
 
     @_play.before_invoke
     async def ensure_voice_state(self, ctx: commands.Context):
