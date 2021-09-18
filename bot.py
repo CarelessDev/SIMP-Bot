@@ -24,8 +24,10 @@ async def on_ready():
 
 @tasks.loop(seconds=300)
 async def change_status():
-    status = ['Caffe Latte Caffe Mocha Cappuchino']
-    await bot.change_presence(activity=discord.Game(choice(status)))
+    status: str = 'Caffe Latte Caffe Mocha Cappuchino'
+    activity: discord.Activity = discord.Activity(
+        type=discord.ActivityType.listening, name=status)
+    await bot.change_presence(activity)
 
 
 bot.run(TOKEN)

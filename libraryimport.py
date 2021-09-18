@@ -16,6 +16,8 @@ from dotenv import load_dotenv
 SKITTLE_DICT = ["uwu", "blushes", "𝘣𝘭𝘶𝘴𝘩𝘦𝘴", "(im a girl btw)"]
 
 
-def skittify(msg: str, skittiness: int = random.randrange(3, 11)) -> str:
+def skittify(msg: str, skittiness: int = 0) -> str:
+    if skittiness <= 0:
+        skittiness = random.choice(3, 11)
     first_char = msg[0].lower()
     return first_char + f"\n{first_char}-" * skittiness + f"\n*{first_char}~{first_char}{msg[1:]}*" + f"\n*{random.choice(SKITTLE_DICT)}*"
