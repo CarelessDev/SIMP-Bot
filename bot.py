@@ -27,7 +27,7 @@ async def change_status():
     status: str = 'Caffe Latte Caffe Mocha Cappuchino'
     activity: discord.Activity = discord.Activity(
         type=discord.ActivityType.listening, name=status)
-    await bot.change_presence(activity)
+    await bot.change_presence(activity=activity)
 
 
 bot.run(TOKEN)
