@@ -139,7 +139,7 @@ class Song:
         return embed
 
     def enqueue_embed(self):
-        embed = (discord.Embed(title=skittify('Enqueue playing'), description='```css\n{0.source.title}\n```'.format(self), color=0xf1c40f)  # discord.Color.blurple())
+        embed = (discord.Embed(title='Enqueued', description='```css\n{0.source.title}\n```'.format(self), color=0xf1c40f)  # discord.Color.blurple())
                  .add_field(name='Duration', value=self.source.duration)
                  .add_field(name='Requested by', value=self.requester.mention)
                  .add_field(name='Uploader', value='[{0.source.uploader}]({0.source.uploader_url})'.format(self))
