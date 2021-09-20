@@ -129,7 +129,7 @@ class Song:
         self.requester = source.requester
 
     def create_embed(self, words="Now playing"):
-        embed = (discord.Embed(title= words, description='```css\n{0.source.title}\n```'.format(self), color=0xf1c40f)  # discord.Color.blurple())
+        embed = (discord.Embed(title=words, description='```css\n{0.source.title}\n```'.format(self), color=0xf1c40f)  # discord.Color.blurple())
                  .add_field(name='Duration', value=self.source.duration)
                  .add_field(name='Requested by', value=self.requester.mention + " ฉาน")
                  .add_field(name='Uploader', value='[{0.source.uploader}]({0.source.uploader_url})'.format(self))
@@ -137,7 +137,6 @@ class Song:
                  .set_thumbnail(url=self.source.thumbnail)
                  .set_author(name=self.requester.name, icon_url=self.requester.avatar_url))
         return embed
-
 
 
 class SongQueue(asyncio.Queue):
@@ -304,7 +303,7 @@ class Music(commands.Cog):
         embed = ctx.voice_state.current.create_embed()
         await ctx.send(embed=embed)
 
-    @commands.command(name='pause', aliases=['pa'])
+    @commands.command(name='pause', aliases=['pa', 'ause'])
     # @commands.has_permissions(manage_guild=True)
     async def _pause(self, ctx: commands.Context):
         """>>>Pause Command:"""
@@ -394,7 +393,7 @@ class Music(commands.Cog):
             await ctx.send(skittify('Loop mode is now `False!`'))
         await ctx.message.add_reaction('✅')
 
-    @commands.command(name='play', aliases=['p'])
+    @commands.command(name='play', aliases=['p', 'lay'])
     async def _play(self, ctx: commands.Context, *, search: str):
         """play/ add song to queue"""
         async with ctx.typing():
