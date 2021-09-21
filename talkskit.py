@@ -1,6 +1,6 @@
 from discord import utils
 from libraryimport import *
-from nlp.chat import talk
+
 
 class Skittle_talk(commands.Cog):
     """talking with skittle chan yay"""
@@ -15,12 +15,7 @@ class Skittle_talk(commands.Cog):
     @commands.command(name='talk', alias=['t'])
     async def talk(self, ctx, *, message:str = None):
         """skittle-chan introduction"""
-        if message:
-            await ctx.send(skittify(talk(message)))
-        else:
-            await ctx.send('nothing to ask \n then y u use this command?')
-
-
+        
     
 
    
