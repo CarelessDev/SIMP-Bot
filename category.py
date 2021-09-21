@@ -85,9 +85,7 @@ class SomeCrap(commands.Cog):
             await ctx.send(embed = emb)
 
         
-        subreddit = reddit.subreddit()
-        
-
+    
 
 
 
