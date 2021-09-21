@@ -75,7 +75,7 @@ class SomeCrap(commands.Cog):
         
         
         if random_sub.over_18:
-            msg = await ctx.send(skittify("Too l..llewd")) 
+            await msg.edit(content=skittify("Too l..llewd")) 
             await msg.add_reaction(emj)
         
         else:
