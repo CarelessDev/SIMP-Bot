@@ -1,7 +1,7 @@
 from libraryimport import *
 from music import Music
 from category import SomeCrap
-
+from talkskit import Skittle_talk
 
 load_dotenv()
 
@@ -11,6 +11,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 def setup(bot):
     bot.add_cog(SomeCrap(bot))
     bot.add_cog(Music(bot))
+    bot.add_cog(Skittle_talk(bot))
 
 
 bot = commands.Bot(command_prefix='simp')
