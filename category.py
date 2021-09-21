@@ -59,7 +59,6 @@ class SomeCrap(commands.Cog):
             async for i in subreddit.search('chino', limit=5):
                 r.append(i)
             random_sub = choice(r)     
-            subreddit = await reddit.subreddit('arknights') 
             random_sub = await subreddit.random()
 
     
