@@ -4,6 +4,7 @@ from category import SomeCrap
 
 
 load_dotenv()
+
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 
