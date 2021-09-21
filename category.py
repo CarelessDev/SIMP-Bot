@@ -18,11 +18,16 @@ class SomeCrap(commands.Cog):
         await ctx.send("Pong! tai")
 
     @commands.command(name='emoji', aliases=['e'])
-    async def emoji(self, ctx):
+    async def emoji(self, ctx, *, name):
         """emoji and shit"""
-        emojis = ctx.bot.emojis
-
-        await ctx.send(choice(emojis))
+        emojis = ctx.guild.emojis
+        if name:
+            try:
+                emj = utils.get(ctx.bot.emojis, name=name)        
+            except :
+                await ctx.send(choice(emojis))                
+        else:
+            await ctx.send(choice(emojis))
       
     @commands.command(name='gay')
     async def gay(self, ctx, *, who:str = None):
@@ -34,9 +39,9 @@ class SomeCrap(commands.Cog):
       
     @commands.command(name='reddit', aliases=['r',  'r/'])
     async def reddit(self, ctx, *, req:str = None):
-        """use simpreddit <subreddit> <search>"""
+        """use simpr <subreddit> <search>"""
         msg = await ctx.send('Loading ... ')
-        emj = utils.get(ctx.bot.emojis, name="fuckyou")
+        emj = utils.get(ctx.bot.emojis, name="Lady")
         if req:
             search = req.split()
             subreddit = await reddit.subreddit(search[0])   
@@ -48,8 +53,11 @@ class SomeCrap(commands.Cog):
             else:
                 random_sub = await subreddit.random()
         else:
-            subreddit = await reddit.subreddit('arknights') 
-            random_sub = await subreddit.random()
+            subreddit = await reddit.subreddit('GochiUsa') 
+            r = []
+            async for i in subreddit.search('chino', limit=5):
+                r.append(i)
+            random_sub = choice(r)     
 
     
 
@@ -65,16 +73,8 @@ class SomeCrap(commands.Cog):
         
         
         if random_sub.over_18:
-            img = Image.open(urlopen(url))
-            img.save('SPOILER_img.jpg')
-            file = discord.File('SPOILER_img.jpg', spoiler=True)
-            emb.set_footer(text='18+ huh You disgusting fuck')
-            
-
-            await msg.edit(content=f'{emj} <https://reddit.com{link}> {emj}', embed = emb) 
-            await ctx.send(file = file )
+            await msg.send(skittify("Too l..llewd")) 
             await msg.add_reaction(emj)
-            os.remove('SPOILER_img.jpg')
         else:
             await msg.edit(content=f'<https://reddit.com{link}> :white_check_mark:') 
             emb.set_footer(text='Here is your meme!')
