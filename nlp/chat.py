@@ -46,11 +46,11 @@ def talk(sentence):
                 return random.choice(intent["responses"])
     else:
         return 'i dont knwo uwu'
-
+'''
 bot_name = "Skittle"
 print("Let's chat! type 'quit to exit")
 while True:
     sentence = input("you: " )
     if sentence == 'quit':
         break
-    print(talk(sentence))
+    print(talk(sentence))'''
