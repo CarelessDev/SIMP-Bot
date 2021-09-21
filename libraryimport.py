@@ -11,6 +11,8 @@ from discord.utils import get
 from async_timeout import timeout
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
+import asyncpraw
+import numpy as np
 
 
 SKITTLE_DICT = ["uwu", "blushes", "𝘣𝘭𝘶𝘴𝘩𝘦𝘴", "(im a girl btw)"]
