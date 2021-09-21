@@ -18,12 +18,13 @@ class SomeCrap(commands.Cog):
         await ctx.send("Pong! tai")
 
     @commands.command(name='emoji', aliases=['e'])
-    async def emoji(self, ctx, *, name):
+    async def emoji(self, ctx, *, name:str = None):
         """emoji and shit"""
         emojis = ctx.guild.emojis
         if name:
             try:
                 emj = utils.get(ctx.bot.emojis, name=name)        
+                await ctx.send(emj)
             except :
                 await ctx.send(choice(emojis))                
         else:
