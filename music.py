@@ -138,7 +138,7 @@ class Song:
                  .add_field(name='Also SIMPed by', value='{0.source.likes}'.format(self))
                  .set_thumbnail(url=self.source.thumbnail)
                  .set_author(name=self.requester.name, icon_url=self.requester.avatar_url)
-                 .set_footer("カフェラテ・カフェモカ・カプチーノ :chino_nopoi:"))
+                 .set_footer(text="カフェラテ・カフェモカ・カプチーノ :chino_nopoi:"))
 
         return embed
 
