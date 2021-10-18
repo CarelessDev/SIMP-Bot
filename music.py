@@ -134,11 +134,11 @@ class Song:
                  .add_field(name='Duration', value=self.source.duration)
                  .add_field(name='SIMPed by', value=self.requester.mention + " ฉาน")
                  .add_field(name='Uploader', value='[{0.source.uploader}]({0.source.uploader_url})'.format(self))
-                 .add_field(name='URL', value='[Click]({0.source.url})'.format(self))
                  .add_field(name='Also SIMPed by', value='{0.source.likes}'.format(self))
+                 .add_field(name='URL', value='[Click]({0.source.url})'.format(self))
                  .set_thumbnail(url=self.source.thumbnail)
                  .set_author(name=self.requester.name, icon_url=self.requester.avatar_url)
-                 .set_footer(text="カフェラテ・カフェモカ・カプチーノ :chino_nopoi:"))
+                 .set_footer(text="カフェラテ・カフェモカ・カプチーノ 🐇🐇 ぴょんぴょん"))
 
         return embed
 
