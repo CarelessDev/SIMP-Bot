@@ -15,11 +15,11 @@ import asyncpraw
 import numpy as np
 
 
-SKITTLE_DICT = ["uwu", "blushes", "𝘣𝘭𝘶𝘴𝘩𝘦𝘴", "(im a girl btw)"]
+SKITTLE_DICT = ["uwu", "blushes", "𝘣𝘭𝘶𝘴𝘩𝘦𝘴", "(im a girl btw)", "ぴょん", "ワンワン"]
 
 
-def skittify(msg: str, skittiness: int = 0) -> str:
+def skittify(msg: str, skittiness: int = 0, firstchar: str = "") -> str:
     if skittiness <= 0:
         skittiness = random.randrange(3, 11)
-    first_char = msg[0].lower()
+    first_char = firstchar if len(firstchar) else msg[0].lower()
     return first_char + f"\n{first_char}-" * skittiness + f"\n*{first_char}~{first_char}{msg[1:]}*" + f"\n*{random.choice(SKITTLE_DICT)}*"
